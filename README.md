@@ -27,7 +27,7 @@ Our predictive maintenance solution is built with the following architecture
 
 
 ## 📋 Requirements
-- Python 3.11 or 3.12
+- Python 3.1 or 03.12
 - Jupyter Notebook
 - Pandas 2.3.2, Matplotlib, Seaborn
 - psycopg2` or `psycopg2-binary` package for PostgreSQL connection
@@ -43,7 +43,7 @@ Our predictive maintenance solution is built with the following architecture
     - Create a new project and database
     - Retrieve your connection string from the Neon Dashboard
 4. In the program, create an env file 
-5. In the env file add the connection string from Neon
+5. In the env file add the connection string from Neon: ex): DATABASE_URL=postgresql: ~ require
 6. Run the Jupyter notebook cells sequentially 
 7. The dashboard will display real time metrics updated every 2 seconds
 
