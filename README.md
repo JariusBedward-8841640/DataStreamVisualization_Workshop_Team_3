@@ -21,13 +21,14 @@ Our predictive maintenance solution is built with the following architecture
 1. **Data Source**: Simulated robot controller data stream (CSV file)
 2. **Data Collection Layer**: Python-based "StreamingSimulator" class
 3. **Data Persistence Layer**: **Neon** (serverless PostgreSQL) database
-4. **Application Layer**: Python for processing and analysis 
+4. **Application Layer**: Jupyter Notebook for processing and analysis 
 5. **Visualization Layer**: Real-time Matplotlib dashboard
 
 
 
 ## 📋 Requirements
 - Python 3.7+
+- Jupyter Notebook
 - Pandas, Matplotlib, Seaborn
 - psycopg2` or `psycopg2-binary` package for PostgreSQL connection
 - A active **Neon.tech** project and database connection string
@@ -43,7 +44,7 @@ Our predictive maintenance solution is built with the following architecture
     - Retrieve your connection string from the Neon Dashboard
 4. In the program, create a env file 
 5. In the env file add the connection string from Neon
-6. Run the python file using: "python run.py"
+6. Run the Jupyter notebook cells sequentially 
 7. The dashboard will display real time metrics updated every 2 seconds
 
     
