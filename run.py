@@ -1,5 +1,3 @@
-
-# animate_streaming_window10_grow_then_slide.py
 import pandas as pd
 import numpy as np
 import matplotlib
@@ -41,18 +39,8 @@ def run_sql(sql: str, params=None):
             except Exception:
                 return []
 
-def insert_data():
-    inserted_record = run_sql(
-        """
-        INSERT INTO CATDC_DATA_FEED
-            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE)
-        VALUES (%s, %s, %s, %s, %s, %s, %s)
-        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
-        """,
-        [1, 1, 1, 2, 33, "2022-04-22 09:00:00", "RUNNING"]
-    )
-
-
+def insert_data(command_string, params):
+    inserted_record = run_sql(command_string, params)
     print("Inserted:", inserted_record)
 
 def truncate_table():
@@ -98,20 +86,37 @@ def draw_frame(i):
     end = i + 1
     sub = df.iloc[start:end]
     sub_time = sub['Time']
+
+
     sub_vals = sub[axes_cols]
+
+
+    sub_axis1_value = sub_vals.iloc[-1, 0]
+    sub_axis2_value = sub_vals.iloc[-1, 1]
+    sub_axis3_value = sub_vals.iloc[-1, 2]
+    sub_axis4_value = sub_vals.iloc[-1, 3]
+    sub_axis5_value = sub_vals.iloc[-1, 4]
+    sub_axis6_value = sub_vals.iloc[-1, 5]
+    sub_axis7_value = sub_vals.iloc[-1, 6]
+    sub_axis8_value = sub_vals.iloc[-1, 7]
+    sub_time_value = sub_time.iloc[-1]
+
 
     x_dense_dt, cum = smooth_stack(sub_time, sub_vals)
 
     prev = np.zeros(cum.shape[1], dtype=float)
     for k, col in enumerate(axes_cols):
-        print(f"Frame {i+1}/{n}, plotting {col}")
+        
         y2 = cum[k]
+
         poly = ax.fill_between(x_dense_dt, prev, y2, alpha=0.6, label=col)
         ax.plot(x_dense_dt, y2, linewidth=1.6, color=poly.get_facecolor()[0])
         prev = y2
 
     left = sub_time.iloc[0]
     right = sub_time.iloc[-1]
+
+
     if right <= left:
         right = left + dt.timedelta(seconds=1)
 
@@ -127,9 +132,87 @@ def draw_frame(i):
     ax.xaxis.set_major_formatter(mdates.DateFormatter("%H:%M:%S"))
     fig.autofmt_xdate()
 
-    
 
-    insert_data()
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [1, 1, 1, 1, sub_axis1_value, sub_time_value, "RUNNING"]
+    )
+
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [2, 1, 1, 1, sub_axis2_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [3, 1, 1, 1, sub_axis3_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [4, 1, 1, 1, sub_axis4_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [5, 1, 1, 1, sub_axis5_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [6, 1, 1, 1, sub_axis6_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [7, 1, 1, 1, sub_axis7_value, sub_time_value, "RUNNING"]
+    )
+
+    insert_data(
+        """
+        INSERT INTO CATDC_DATA_FEED
+            (PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE) 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)
+        RETURNING ID, PART_ID, TYPE_ID, SOURCE_ID, FEED_ID, READING, TIMESTAMP, STATE
+        """,
+        [8, 1, 1, 1, sub_axis8_value, sub_time_value, "RUNNING"]
+    )
 
 
 
